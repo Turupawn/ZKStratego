@@ -11,7 +11,7 @@ import { Direction } from "../common.sol";
  * @dev This interface is automatically generated from the corresponding system contract. Do not edit manually.
  */
 interface IMyGameSystem {
-  function app__spawn(int32 x, int32 y, uint32 commitment) external;
+  function app__spawn(int32 x, int32 y, uint256 commitment) external;
 
   function app__move(int32 characterAtX, int32 characterAtY, Direction direction) external;
 

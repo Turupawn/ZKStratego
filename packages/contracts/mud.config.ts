@@ -24,7 +24,7 @@ export default defineWorld({
     PlayerPrivateState: {
       schema: {
         account: "address",
-        commitment: "uint32",
+        commitment: "uint256",
       },
       key: ["account"]
     },

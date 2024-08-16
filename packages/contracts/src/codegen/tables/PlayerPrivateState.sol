@@ -21,12 +21,12 @@ library PlayerPrivateState {
   ResourceId constant _tableId = ResourceId.wrap(0x74626170700000000000000000000000506c6179657250726976617465537461);
 
   FieldLayout constant _fieldLayout =
-    FieldLayout.wrap(0x0004010004000000000000000000000000000000000000000000000000000000);
+    FieldLayout.wrap(0x0020010020000000000000000000000000000000000000000000000000000000);
 
   // Hex-encoded key schema of (address)
   Schema constant _keySchema = Schema.wrap(0x0014010061000000000000000000000000000000000000000000000000000000);
-  // Hex-encoded value schema of (uint32)
-  Schema constant _valueSchema = Schema.wrap(0x0004010003000000000000000000000000000000000000000000000000000000);
+  // Hex-encoded value schema of (uint256)
+  Schema constant _valueSchema = Schema.wrap(0x002001001f000000000000000000000000000000000000000000000000000000);
 
   /**
    * @notice Get the table's key field names.
@@ -63,51 +63,51 @@ library PlayerPrivateState {
   /**
    * @notice Get commitment.
    */
-  function getCommitment(address account) internal view returns (uint32 commitment) {
+  function getCommitment(address account) internal view returns (uint256 commitment) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
     bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 0, _fieldLayout);
-    return (uint32(bytes4(_blob)));
+    return (uint256(bytes32(_blob)));
   }
 
   /**
    * @notice Get commitment.
    */
-  function _getCommitment(address account) internal view returns (uint32 commitment) {
+  function _getCommitment(address account) internal view returns (uint256 commitment) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
     bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 0, _fieldLayout);
-    return (uint32(bytes4(_blob)));
+    return (uint256(bytes32(_blob)));
   }
 
   /**
    * @notice Get commitment.
    */
-  function get(address account) internal view returns (uint32 commitment) {
+  function get(address account) internal view returns (uint256 commitment) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
     bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 0, _fieldLayout);
-    return (uint32(bytes4(_blob)));
+    return (uint256(bytes32(_blob)));
   }
 
   /**
    * @notice Get commitment.
    */
-  function _get(address account) internal view returns (uint32 commitment) {
+  function _get(address account) internal view returns (uint256 commitment) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
     bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 0, _fieldLayout);
-    return (uint32(bytes4(_blob)));
+    return (uint256(bytes32(_blob)));
   }
 
   /**
    * @notice Set commitment.
    */
-  function setCommitment(address account, uint32 commitment) internal {
+  function setCommitment(address account, uint256 commitment) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
@@ -117,7 +117,7 @@ library PlayerPrivateState {
   /**
    * @notice Set commitment.
    */
-  function _setCommitment(address account, uint32 commitment) internal {
+  function _setCommitment(address account, uint256 commitment) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
@@ -127,7 +127,7 @@ library PlayerPrivateState {
   /**
    * @notice Set commitment.
    */
-  function set(address account, uint32 commitment) internal {
+  function set(address account, uint256 commitment) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
@@ -137,7 +137,7 @@ library PlayerPrivateState {
   /**
    * @notice Set commitment.
    */
-  function _set(address account, uint32 commitment) internal {
+  function _set(address account, uint256 commitment) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(uint160(account)));
 
@@ -168,7 +168,7 @@ library PlayerPrivateState {
    * @notice Tightly pack static (fixed length) data using this table's schema.
    * @return The static data, encoded into a sequence of bytes.
    */
-  function encodeStatic(uint32 commitment) internal pure returns (bytes memory) {
+  function encodeStatic(uint256 commitment) internal pure returns (bytes memory) {
     return abi.encodePacked(commitment);
   }
 
@@ -178,7 +178,7 @@ library PlayerPrivateState {
    * @return The lengths of the dynamic fields (packed into a single bytes32 value).
    * @return The dynamic (variable length) data, encoded into a sequence of bytes.
    */
-  function encode(uint32 commitment) internal pure returns (bytes memory, EncodedLengths, bytes memory) {
+  function encode(uint256 commitment) internal pure returns (bytes memory, EncodedLengths, bytes memory) {
     bytes memory _staticData = encodeStatic(commitment);
 
     EncodedLengths _encodedLengths;

@@ -18,7 +18,7 @@ interface ICircomDefendVerifier {
 }
 
 contract MyGameSystem is System {
-  function spawn(int32 x, int32 y, uint32 commitment) public {
+  function spawn(int32 x, int32 y, uint256 commitment) public {
     //require(PlayerPrivateState.getCommitment(_msgSender()) == 0, "Player already spawned");
 
     Character.set(x, y, _msgSender(), 0, false);
