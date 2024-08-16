@@ -21,7 +21,17 @@ export function createSystemCalls(
     return getComponentValue(Character,  singletonEntity);
   }
 
+  const attack = async (fromX: number, fromY: number, toX: number, toY: number) => {
+    let pa = [1,1];
+    let pb = [[1,1],[1,1]];
+    let pc = [1,1];
+    let publicSignals = [1,2,3,4];
+    const tx = await worldContract.write.app__attack([pa, pb, pc, publicSignals, fromX, fromY, toX, toY]);
+    await waitForTransaction(tx);
+    return getComponentValue(Character,  singletonEntity);
+  }
+
   return {
-    spawn, move
+    spawn, move, attack
   };
 }

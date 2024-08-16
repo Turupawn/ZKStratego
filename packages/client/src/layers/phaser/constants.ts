@@ -13,6 +13,7 @@ export enum Animations {
   D = "D",
   Dead = "Dead",
   Unknown = "Unknown",
+  Attacked = "Attacked",
 }
 
 export enum Directions {

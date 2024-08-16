@@ -33,8 +33,8 @@ contract MyGameSystem is System {
     CharacterData memory character = Character.get(characterAtX, characterAtY);
 
     //require(!character.isDead, "Character is dead");
-    //require(character.attackedAt != 0, "Character is under attack");
-    //require(character.owner == _msgSender(), "Character is dead");
+    require(character.attackedAt == 0, "Character is under attack");
+    require(character.owner == _msgSender(), "Only owner");
 
     int32 x = characterAtX;
     int32 y = characterAtY;
@@ -48,14 +48,14 @@ contract MyGameSystem is System {
     if(direction == Direction.Right)
       x += 1;
     
-    //CharacterData memory characterAtDestination = Character.get(x, y);
-    //require(characterAtDestination.owner == address(0), "Destination is occupied");
+    CharacterData memory characterAtDestination = Character.get(x, y);
+    require(characterAtDestination.owner == address(0), "Destination is occupied");
 
     Character.deleteRecord(characterAtX, characterAtY);
     Character.set(x, y, _msgSender(), 0, false);
   }
 
-  function attack(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[4] calldata _pubSignals, address playerAddress,
+  function attack(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[4] calldata _pubSignals,
     int32 fromX, int32 fromY, int32 toX, int32 toY
   ) public {
     // TODO: verifyProof
@@ -63,7 +63,9 @@ contract MyGameSystem is System {
     Character.setAttackedAt(toX, toY, uint32(block.timestamp));
   }
 
-  function defend(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[4] calldata _pubSignals, address playerAddress, int32 fromX, int32 fromY) public {
+  function defend(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[4] calldata _pubSignals,
+    int32 fromX, int32 fromY
+  ) public {
     
   }
 
