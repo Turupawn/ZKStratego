@@ -57,8 +57,24 @@ export function createSystemCalls(
       "./zk_artifacts/reveal_final.zkey"
     );
 
-    console.log(proof)
-    console.log(publicSignals)
+    let pa = proof.pi_a
+    let pb = proof.pi_b
+    let pc = proof.pi_c
+    pa.pop()
+    pb.pop()
+    pc.pop()
+
+    const tx = await worldContract.write.app__attack([pa, pb, pc, publicSignals, fromX, fromY, toX, toY]);
+    await waitForTransaction(tx);
+    return getComponentValue(Character,  singletonEntity);
+  }
+
+  const defend = async (x: number, y: number, circuitInputs: any) => {
+
+    const { proof, publicSignals } = await groth16.fullProve(circuitInputs,
+      "./zk_artifacts/defend.wasm",
+      "./zk_artifacts/defend_final.zkey"
+    );
 
     let pa = proof.pi_a
     let pb = proof.pi_b
@@ -67,16 +83,14 @@ export function createSystemCalls(
     pb.pop()
     pc.pop()
 
-    console.log(pa)
-    console.log(pb)
-    console.log(pc)
+    console.log(publicSignals)
 
-    const tx = await worldContract.write.app__attack([pa, pb, pc, publicSignals, fromX, fromY, toX, toY]);
+    const tx = await worldContract.write.app__defend([pa, pb, pc, publicSignals, x, y]);
     await waitForTransaction(tx);
     return getComponentValue(Character,  singletonEntity);
   }
 
   return {
-    spawn, move, attack
+    spawn, move, attack, defend
   };
 }

@@ -1,9 +1,9 @@
 {
-    "character1": 1,
-    "character2": 2,
-    "character3": 3,
-    "character4": 4,
+    "character1": 4,
+    "character2": 1,
+    "character3": 2,
+    "character4": 3,
     "privateSalt": 123,
-    "characterTarget": 2,
-    "attackerLevel": 1
+    "attackerLevel": 4,
+    "characterTarget": 2
 }

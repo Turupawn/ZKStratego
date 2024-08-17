@@ -18,6 +18,7 @@ export default defineWorld({
         owner: "address",
         id: "uint32",
         attackedAt: "uint32",
+        attackedByValue: "uint32",
         revealedValue: "uint32",
         isDead: "bool",
       },
@@ -32,7 +33,8 @@ export default defineWorld({
     },
     VerifierContracts: {
       schema: {
-        revealContractAddress: "address"
+        revealContractAddress: "address",
+        defendContractAddress: "address"
       },
       key: [],
     },

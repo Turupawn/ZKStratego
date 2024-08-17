@@ -60,7 +60,7 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
     world,
     networkLayer: {
       components: { Character },
-      systemCalls: { spawn, move, attack }
+      systemCalls: { spawn, move, attack, defend }
     },
     scenes: {
         Main: { objectPool, input }
@@ -159,7 +159,24 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
       const destinationCharacter = getComponentValue(Character, encodedDestinationPosition);
       const direction = calculateDirection(startTile, endTile);
 
-      if (destinationCharacter) {
+      if(startTile.x == endTile.x
+          && startTile.y == endTile.y)
+      {
+
+        console.log(`Defending character at (${startTile.x}, ${startTile.y})`);
+
+        defend(startTile.x, startTile.y,
+        {
+          character1: secretCharacterValues[1],
+          character2: secretCharacterValues[2],
+          character3: secretCharacterValues[3],
+          character4: secretCharacterValues[4],
+          privateSalt: privateSalt,
+          characterTarget: destinationCharacter.id,
+          attackerLevel: destinationCharacter.attackedByValue
+        });
+
+      } else if (destinationCharacter) {
         const encodedStartPosition = encodePosition(startTile.x, startTile.y);
         const startCharacter = getComponentValue(Character, encodedStartPosition);
 
@@ -187,7 +204,6 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
 
   defineEnterSystem(world, [Has(Character)], ({ entity }) => {
     const character = getComponentValue(Character, entity);
-    console.log(character)
     const characterObj = objectPool.get(entity, "Sprite");
     characterObj.setComponent({
       id: 'animation',
@@ -222,6 +238,8 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
       return;
     const pixelPosition = tileCoordToPixelCoord(decodePosition(entity), TILE_WIDTH, TILE_HEIGHT);
     const characterObj = objectPool.get(entity, "Sprite");
+
+    console.log(character)
     if (character.isDead) {
       characterObj.setComponent({
         id: 'animation',
@@ -236,7 +254,7 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
           sprite.play(Animations.Attacked);
         }
       });
-    } else if(character.revealedValue != 0)
+    } else
     {
       characterObj.setComponent({
         id: 'animation',
@@ -256,6 +274,8 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
             case 4:
               sprite.play(Animations.D);
               break;
+            default:
+              sprite.play(Animations.Unknown);
           }
         }
       });

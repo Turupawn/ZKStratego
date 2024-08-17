@@ -6,6 +6,7 @@ import { console } from "forge-std/console.sol";
 import { StoreSwitch } from "@latticexyz/store/src/StoreSwitch.sol";
 
 import { RevealVerifier } from "../src/RevealVerifier.sol";
+import { DefendVerifier } from "../src/DefendVerifier.sol";
 
 import { IWorld } from "../src/codegen/world/IWorld.sol";
 
@@ -30,6 +31,9 @@ contract PostDeploy is Script {
 
     address revealVerifier = address(new RevealVerifier());
     VerifierContracts.setRevealContractAddress(revealVerifier);
+
+    address defendVerifier = address(new DefendVerifier());
+    VerifierContracts.setDefendContractAddress(defendVerifier);
 
     vm.stopBroadcast();
   }

@@ -5,4 +5,4 @@ pragma solidity >=0.8.24;
 
 import { Character, CharacterData } from "./tables/Character.sol";
 import { PlayerPrivateState } from "./tables/PlayerPrivateState.sol";
-import { VerifierContracts } from "./tables/VerifierContracts.sol";
+import { VerifierContracts, VerifierContractsData } from "./tables/VerifierContracts.sol";

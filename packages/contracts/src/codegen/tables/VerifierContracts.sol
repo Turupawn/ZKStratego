@@ -16,17 +16,22 @@ import { Schema } from "@latticexyz/store/src/Schema.sol";
 import { EncodedLengths, EncodedLengthsLib } from "@latticexyz/store/src/EncodedLengths.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 
+struct VerifierContractsData {
+  address revealContractAddress;
+  address defendContractAddress;
+}
+
 library VerifierContracts {
   // Hex below is the result of `WorldResourceIdLib.encode({ namespace: "app", name: "VerifierContract", typeId: RESOURCE_TABLE });`
   ResourceId constant _tableId = ResourceId.wrap(0x746261707000000000000000000000005665726966696572436f6e7472616374);
 
   FieldLayout constant _fieldLayout =
-    FieldLayout.wrap(0x0014010014000000000000000000000000000000000000000000000000000000);
+    FieldLayout.wrap(0x0028020014140000000000000000000000000000000000000000000000000000);
 
   // Hex-encoded key schema of ()
   Schema constant _keySchema = Schema.wrap(0x0000000000000000000000000000000000000000000000000000000000000000);
-  // Hex-encoded value schema of (address)
-  Schema constant _valueSchema = Schema.wrap(0x0014010061000000000000000000000000000000000000000000000000000000);
+  // Hex-encoded value schema of (address, address)
+  Schema constant _valueSchema = Schema.wrap(0x0028020061610000000000000000000000000000000000000000000000000000);
 
   /**
    * @notice Get the table's key field names.
@@ -41,8 +46,9 @@ library VerifierContracts {
    * @return fieldNames An array of strings with the names of value fields.
    */
   function getFieldNames() internal pure returns (string[] memory fieldNames) {
-    fieldNames = new string[](1);
+    fieldNames = new string[](2);
     fieldNames[0] = "revealContractAddress";
+    fieldNames[1] = "defendContractAddress";
   }
 
   /**
@@ -80,26 +86,6 @@ library VerifierContracts {
   }
 
   /**
-   * @notice Get revealContractAddress.
-   */
-  function get() internal view returns (address revealContractAddress) {
-    bytes32[] memory _keyTuple = new bytes32[](0);
-
-    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 0, _fieldLayout);
-    return (address(bytes20(_blob)));
-  }
-
-  /**
-   * @notice Get revealContractAddress.
-   */
-  function _get() internal view returns (address revealContractAddress) {
-    bytes32[] memory _keyTuple = new bytes32[](0);
-
-    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 0, _fieldLayout);
-    return (address(bytes20(_blob)));
-  }
-
-  /**
    * @notice Set revealContractAddress.
    */
   function setRevealContractAddress(address revealContractAddress) internal {
@@ -118,21 +104,150 @@ library VerifierContracts {
   }
 
   /**
-   * @notice Set revealContractAddress.
+   * @notice Get defendContractAddress.
    */
-  function set(address revealContractAddress) internal {
+  function getDefendContractAddress() internal view returns (address defendContractAddress) {
     bytes32[] memory _keyTuple = new bytes32[](0);
 
-    StoreSwitch.setStaticField(_tableId, _keyTuple, 0, abi.encodePacked((revealContractAddress)), _fieldLayout);
+    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 1, _fieldLayout);
+    return (address(bytes20(_blob)));
   }
 
   /**
-   * @notice Set revealContractAddress.
+   * @notice Get defendContractAddress.
    */
-  function _set(address revealContractAddress) internal {
+  function _getDefendContractAddress() internal view returns (address defendContractAddress) {
     bytes32[] memory _keyTuple = new bytes32[](0);
 
-    StoreCore.setStaticField(_tableId, _keyTuple, 0, abi.encodePacked((revealContractAddress)), _fieldLayout);
+    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 1, _fieldLayout);
+    return (address(bytes20(_blob)));
+  }
+
+  /**
+   * @notice Set defendContractAddress.
+   */
+  function setDefendContractAddress(address defendContractAddress) internal {
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    StoreSwitch.setStaticField(_tableId, _keyTuple, 1, abi.encodePacked((defendContractAddress)), _fieldLayout);
+  }
+
+  /**
+   * @notice Set defendContractAddress.
+   */
+  function _setDefendContractAddress(address defendContractAddress) internal {
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    StoreCore.setStaticField(_tableId, _keyTuple, 1, abi.encodePacked((defendContractAddress)), _fieldLayout);
+  }
+
+  /**
+   * @notice Get the full data.
+   */
+  function get() internal view returns (VerifierContractsData memory _table) {
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    (bytes memory _staticData, EncodedLengths _encodedLengths, bytes memory _dynamicData) = StoreSwitch.getRecord(
+      _tableId,
+      _keyTuple,
+      _fieldLayout
+    );
+    return decode(_staticData, _encodedLengths, _dynamicData);
+  }
+
+  /**
+   * @notice Get the full data.
+   */
+  function _get() internal view returns (VerifierContractsData memory _table) {
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    (bytes memory _staticData, EncodedLengths _encodedLengths, bytes memory _dynamicData) = StoreCore.getRecord(
+      _tableId,
+      _keyTuple,
+      _fieldLayout
+    );
+    return decode(_staticData, _encodedLengths, _dynamicData);
+  }
+
+  /**
+   * @notice Set the full data using individual values.
+   */
+  function set(address revealContractAddress, address defendContractAddress) internal {
+    bytes memory _staticData = encodeStatic(revealContractAddress, defendContractAddress);
+
+    EncodedLengths _encodedLengths;
+    bytes memory _dynamicData;
+
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    StoreSwitch.setRecord(_tableId, _keyTuple, _staticData, _encodedLengths, _dynamicData);
+  }
+
+  /**
+   * @notice Set the full data using individual values.
+   */
+  function _set(address revealContractAddress, address defendContractAddress) internal {
+    bytes memory _staticData = encodeStatic(revealContractAddress, defendContractAddress);
+
+    EncodedLengths _encodedLengths;
+    bytes memory _dynamicData;
+
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    StoreCore.setRecord(_tableId, _keyTuple, _staticData, _encodedLengths, _dynamicData, _fieldLayout);
+  }
+
+  /**
+   * @notice Set the full data using the data struct.
+   */
+  function set(VerifierContractsData memory _table) internal {
+    bytes memory _staticData = encodeStatic(_table.revealContractAddress, _table.defendContractAddress);
+
+    EncodedLengths _encodedLengths;
+    bytes memory _dynamicData;
+
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    StoreSwitch.setRecord(_tableId, _keyTuple, _staticData, _encodedLengths, _dynamicData);
+  }
+
+  /**
+   * @notice Set the full data using the data struct.
+   */
+  function _set(VerifierContractsData memory _table) internal {
+    bytes memory _staticData = encodeStatic(_table.revealContractAddress, _table.defendContractAddress);
+
+    EncodedLengths _encodedLengths;
+    bytes memory _dynamicData;
+
+    bytes32[] memory _keyTuple = new bytes32[](0);
+
+    StoreCore.setRecord(_tableId, _keyTuple, _staticData, _encodedLengths, _dynamicData, _fieldLayout);
+  }
+
+  /**
+   * @notice Decode the tightly packed blob of static data using this table's field layout.
+   */
+  function decodeStatic(
+    bytes memory _blob
+  ) internal pure returns (address revealContractAddress, address defendContractAddress) {
+    revealContractAddress = (address(Bytes.getBytes20(_blob, 0)));
+
+    defendContractAddress = (address(Bytes.getBytes20(_blob, 20)));
+  }
+
+  /**
+   * @notice Decode the tightly packed blobs using this table's field layout.
+   * @param _staticData Tightly packed static fields.
+   *
+   *
+   */
+  function decode(
+    bytes memory _staticData,
+    EncodedLengths,
+    bytes memory
+  ) internal pure returns (VerifierContractsData memory _table) {
+    (_table.revealContractAddress, _table.defendContractAddress) = decodeStatic(_staticData);
   }
 
   /**
@@ -157,8 +272,11 @@ library VerifierContracts {
    * @notice Tightly pack static (fixed length) data using this table's schema.
    * @return The static data, encoded into a sequence of bytes.
    */
-  function encodeStatic(address revealContractAddress) internal pure returns (bytes memory) {
-    return abi.encodePacked(revealContractAddress);
+  function encodeStatic(
+    address revealContractAddress,
+    address defendContractAddress
+  ) internal pure returns (bytes memory) {
+    return abi.encodePacked(revealContractAddress, defendContractAddress);
   }
 
   /**
@@ -167,8 +285,11 @@ library VerifierContracts {
    * @return The lengths of the dynamic fields (packed into a single bytes32 value).
    * @return The dynamic (variable length) data, encoded into a sequence of bytes.
    */
-  function encode(address revealContractAddress) internal pure returns (bytes memory, EncodedLengths, bytes memory) {
-    bytes memory _staticData = encodeStatic(revealContractAddress);
+  function encode(
+    address revealContractAddress,
+    address defendContractAddress
+  ) internal pure returns (bytes memory, EncodedLengths, bytes memory) {
+    bytes memory _staticData = encodeStatic(revealContractAddress, defendContractAddress);
 
     EncodedLengths _encodedLengths;
     bytes memory _dynamicData;
