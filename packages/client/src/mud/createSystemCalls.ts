@@ -28,12 +28,12 @@ export function createSystemCalls(
     const { proof, publicSignals } = await groth16.fullProve(
       {
           character1: 4,
-          character2: 3,
+          character2: 1,
           character3: 2,
-          character4: 1,
+          character4: 3,
           privateSalt: 123,
-          characterReveal: 4,
-          valueReveal: 1,
+          characterReveal: 1,
+          valueReveal: 4,
       },
       "./zk_artifacts/reveal.wasm",
       "./zk_artifacts/reveal_final.zkey"
@@ -50,18 +50,9 @@ export function createSystemCalls(
     return getComponentValue(Character,  singletonEntity);
   }
 
-  const attack = async (fromX: number, fromY: number, toX: number, toY: number) => {
+  const attack = async (fromX: number, fromY: number, toX: number, toY: number, circuitInputs: any) => {
 
-    const { proof, publicSignals } = await groth16.fullProve(
-      {
-          character1: 4,
-          character2: 3,
-          character3: 2,
-          character4: 1,
-          privateSalt: 123,
-          characterReveal: 4,
-          valueReveal: 1,
-      },
+    const { proof, publicSignals } = await groth16.fullProve(circuitInputs,
       "./zk_artifacts/reveal.wasm",
       "./zk_artifacts/reveal_final.zkey"
     );

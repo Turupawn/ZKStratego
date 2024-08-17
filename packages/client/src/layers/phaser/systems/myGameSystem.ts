@@ -75,6 +75,9 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
   let arrowLine2 = objectPool.get("ArrowLine2", "Line");
   let arrowLine3 = objectPool.get("ArrowLine3", "Line");
 
+  let secretCharacterValues = [0, 4, 1, 2, 3];
+  let privateSalt = 123;
+
   input.pointerdown$.subscribe((event) => {
     const { worldX, worldY } = event.pointer;
     const player = pixelCoordToTileCoord({ x: worldX, y: worldY }, TILE_WIDTH, TILE_HEIGHT);
@@ -148,7 +151,6 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
     if (startPoint && draggedEntity) {
         
       const { worldX, worldY } = event.pointer;
-      const character = objectPool.get(draggedEntity, "Sprite");
 
       const startTile = pixelCoordToTileCoord(startPoint, TILE_WIDTH, TILE_HEIGHT);
       const endTile = pixelCoordToTileCoord({ x: worldX, y: worldY }, TILE_WIDTH, TILE_HEIGHT);
@@ -156,8 +158,22 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
       const encodedDestinationPosition = encodePosition(endTile.x, endTile.y);
       const destinationCharacter = getComponentValue(Character, encodedDestinationPosition);
       const direction = calculateDirection(startTile, endTile);
+
       if (destinationCharacter) {
-        attack(startTile.x, startTile.y, endTile.x, endTile.y);
+        const encodedStartPosition = encodePosition(startTile.x, startTile.y);
+        const startCharacter = getComponentValue(Character, encodedStartPosition);
+
+        attack(startTile.x, startTile.y, endTile.x, endTile.y,
+          {
+            character1: secretCharacterValues[1],
+            character2: secretCharacterValues[2],
+            character3: secretCharacterValues[3],
+            character4: secretCharacterValues[4],
+            privateSalt: privateSalt,
+            characterReveal: startCharacter.id,
+            valueReveal: secretCharacterValues[startCharacter.id]
+          }
+        );
         console.log(`Attacked character from (${startTile.x}, ${startTile.y}) to (${endTile.x}, ${endTile.y})`);
       } else if (direction != null) {
         move(startTile.x, startTile.y, direction);

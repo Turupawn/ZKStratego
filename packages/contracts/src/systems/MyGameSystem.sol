@@ -64,7 +64,7 @@ contract MyGameSystem is System {
     uint256 valueReveal = _pubSignals[2];
     
     require(PlayerPrivateState.getCommitment(_msgSender()) == commitment, "Invalid commitment");
-    // TODO: check character id reveal require(commitment)
+    require(characterReveal == Character.getId(fromX, fromY), "Invalid attacker id");
     require(Character.getOwner(fromX, fromY) == _msgSender(), "You're not the planet owner");
     Character.setRevealedValue(fromX, fromY, uint32(valueReveal));
     Character.setAttackedAt(toX, toY, uint32(block.timestamp));
