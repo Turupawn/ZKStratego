@@ -21,7 +21,7 @@ function numberToBytes32(num: number): string {
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-  { worldContract, waitForTransaction }: SetupNetworkResult,
+  { worldContract, waitForTransaction, playerEntity }: SetupNetworkResult,
   { Character }: ClientComponents,
 ) {
   const spawn = async (x: number, y: number) => {
@@ -51,7 +51,6 @@ export function createSystemCalls(
   }
 
   const attack = async (fromX: number, fromY: number, toX: number, toY: number, circuitInputs: any) => {
-
     const { proof, publicSignals } = await groth16.fullProve(circuitInputs,
       "./zk_artifacts/reveal.wasm",
       "./zk_artifacts/reveal_final.zkey"
@@ -70,7 +69,6 @@ export function createSystemCalls(
   }
 
   const defend = async (x: number, y: number, circuitInputs: any) => {
-
     const { proof, publicSignals } = await groth16.fullProve(circuitInputs,
       "./zk_artifacts/defend.wasm",
       "./zk_artifacts/defend_final.zkey"
@@ -91,6 +89,6 @@ export function createSystemCalls(
   }
 
   return {
-    spawn, move, attack, defend
+    spawn, move, attack, defend, playerEntity
   };
 }

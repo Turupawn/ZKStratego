@@ -14,6 +14,13 @@ export enum Animations {
   Dead = "Dead",
   Unknown = "Unknown",
   Attacked = "Attacked",
+  PlayerA = "PlayerA",
+  PlayerB = "PlayerB",
+  PlayerC = "PlayerC",
+  PlayerD = "PlayerD",
+  PlayerDead = "PlayerDead",
+  PlayerUnknown = "PlayerUnknown",
+  PlayerAttacked = "PlayerAttacked",
 }
 
 export enum Directions {

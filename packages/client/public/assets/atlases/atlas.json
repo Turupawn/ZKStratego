@@ -5,7 +5,7 @@
     },
     "textures": [
         {
-            "image": "atlas.png?timestamp=1723923199459",
+            "image": "atlas.png?timestamp=1723930291460",
             "format": "RGBA8888",
             "size": {
                 "w": 2048,
@@ -140,7 +140,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/Unknown/1.png",
+                    "filename": "sprites/PlayerA/1.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -161,7 +161,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/attack/0.png",
+                    "filename": "sprites/PlayerAttacked/1.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -182,7 +182,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/attack/1.png",
+                    "filename": "sprites/PlayerB/1.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -203,7 +203,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/attack/2.png",
+                    "filename": "sprites/PlayerC/1.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -218,6 +218,153 @@
                     },
                     "frame": {
                         "x": 96,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/PlayerD/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 96,
+                        "y": 32,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/PlayerDead/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 96,
+                        "y": 64,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/PlayerUnknown/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 0,
+                        "y": 96,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/Unknown/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 32,
+                        "y": 96,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/golem/attack/0.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 64,
+                        "y": 96,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/golem/attack/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 96,
+                        "y": 96,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/golem/attack/2.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 128,
                         "y": 0,
                         "w": 32,
                         "h": 32
@@ -238,7 +385,7 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 96,
+                        "x": 128,
                         "y": 32,
                         "w": 32,
                         "h": 32
@@ -259,7 +406,7 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 96,
+                        "x": 128,
                         "y": 64,
                         "w": 32,
                         "h": 32
@@ -280,7 +427,7 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 0,
+                        "x": 128,
                         "y": 96,
                         "w": 32,
                         "h": 32
@@ -301,8 +448,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 32,
-                        "y": 96,
+                        "x": 0,
+                        "y": 128,
                         "w": 32,
                         "h": 32
                     }
@@ -322,8 +469,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 64,
-                        "y": 96,
+                        "x": 32,
+                        "y": 128,
                         "w": 32,
                         "h": 32
                     }
@@ -343,8 +490,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 96,
-                        "y": 96,
+                        "x": 64,
+                        "y": 128,
                         "w": 32,
                         "h": 32
                     }
@@ -364,8 +511,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 128,
-                        "y": 0,
+                        "x": 96,
+                        "y": 128,
                         "w": 32,
                         "h": 32
                     }
@@ -386,7 +533,7 @@
                     },
                     "frame": {
                         "x": 128,
-                        "y": 32,
+                        "y": 128,
                         "w": 32,
                         "h": 32
                     }
@@ -406,8 +553,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 128,
-                        "y": 64,
+                        "x": 160,
+                        "y": 0,
                         "w": 32,
                         "h": 32
                     }
@@ -427,8 +574,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 32,
-                        "y": 64,
+                        "x": 64,
+                        "y": 96,
                         "w": 32,
                         "h": 32
                     }

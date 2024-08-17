@@ -60,7 +60,7 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
     world,
     networkLayer: {
       components: { Character },
-      systemCalls: { spawn, move, attack, defend }
+      systemCalls: { spawn, move, attack, defend, playerEntity }
     },
     scenes: {
         Main: { objectPool, input }
@@ -204,25 +204,48 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
 
   defineEnterSystem(world, [Has(Character)], ({ entity }) => {
     const character = getComponentValue(Character, entity);
+
     const characterObj = objectPool.get(entity, "Sprite");
     characterObj.setComponent({
       id: 'animation',
       once: (sprite) => {
-        switch (character.revealedValue)  {
-          case 1:
-            sprite.play(Animations.A);
-            break;
-          case 2:
-            sprite.play(Animations.B);
-            break;
-          case 3:
-            sprite.play(Animations.C);
-            break;
-          case 4:
-            sprite.play(Animations.D);
-            break;
-          default:
-            sprite.play(Animations.Unknown);
+        if("0x" + playerEntity.slice(26).toLowerCase() == "" + character.owner.toLowerCase()) {
+          console.log("Azul")
+          switch (character.revealedValue)  {
+            case 1:
+              sprite.play(Animations.PlayerA);
+              break;
+            case 2:
+              sprite.play(Animations.PlayerB);
+              break;
+            case 3:
+              sprite.play(Animations.PlayerC);
+              break;
+            case 4:
+              sprite.play(Animations.PlayerD);
+              break;
+            default:
+              sprite.play(Animations.PlayerUnknown);
+          }
+        }else {
+          console.log("Negro")
+
+          switch (character.revealedValue)  {
+            case 1:
+              sprite.play(Animations.A);
+              break;
+            case 2:
+              sprite.play(Animations.B);
+              break;
+            case 3:
+              sprite.play(Animations.C);
+              break;
+            case 4:
+              sprite.play(Animations.D);
+              break;
+            default:
+              sprite.play(Animations.Unknown);
+          }
         }
       }
     });
@@ -259,23 +282,43 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
       characterObj.setComponent({
         id: 'animation',
         once: (sprite) => {
-          sprite.play(Animations.Attacked);
-
-          switch (character.revealedValue) {
-            case 1:
-              sprite.play(Animations.A);
-              break;
-            case 2:
-              sprite.play(Animations.B);
-              break;
-            case 3:
-              sprite.play(Animations.C);
-              break;
-            case 4:
-              sprite.play(Animations.D);
-              break;
-            default:
-              sprite.play(Animations.Unknown);
+          if("0x" + playerEntity.slice(26).toLowerCase() == "" + character.owner.toLowerCase()) {
+            console.log("Azul")
+            switch (secretCharacterValues[character.id])  {
+              case 1:
+                sprite.play(Animations.PlayerA);
+                break;
+              case 2:
+                sprite.play(Animations.PlayerB);
+                break;
+              case 3:
+                sprite.play(Animations.PlayerC);
+                break;
+              case 4:
+                sprite.play(Animations.PlayerD);
+                break;
+              default:
+                sprite.play(Animations.PlayerUnknown);
+            }
+          }else {
+            console.log("Negro")
+  
+            switch (character.revealedValue)  {
+              case 1:
+                sprite.play(Animations.A);
+                break;
+              case 2:
+                sprite.play(Animations.B);
+                break;
+              case 3:
+                sprite.play(Animations.C);
+                break;
+              case 4:
+                sprite.play(Animations.D);
+                break;
+              default:
+                sprite.play(Animations.Unknown);
+            }
           }
         }
       });
