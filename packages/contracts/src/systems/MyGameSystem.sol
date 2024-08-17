@@ -2,15 +2,15 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { Character, CharacterData } from "../codegen/index.sol";
+import { Character, CharacterData, VerifierContracts } from "../codegen/index.sol";
 import { PlayerPrivateState } from "../codegen/index.sol";
 import { Direction } from "../codegen/common.sol";
 import { getKeysWithValue } from "@latticexyz/world-modules/src/modules/keyswithvalue/getKeysWithValue.sol";
 
 import { EncodedLengths, EncodedLengthsLib } from "@latticexyz/store/src/EncodedLengths.sol";
 
-interface ICircomAttackVerifier {
-    function verifyProof(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[4] calldata _pubSignals) external view returns (bool);
+interface ICircomRevealVerifier {
+    function verifyProof(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[3] calldata _pubSignals) external view returns (bool);
 }
 
 interface ICircomDefendVerifier {
@@ -21,10 +21,10 @@ contract MyGameSystem is System {
   function spawn(int32 x, int32 y, uint256 commitment) public {
     //require(PlayerPrivateState.getCommitment(_msgSender()) == 0, "Player already spawned");
 
-    Character.set(x, y, _msgSender(), 0, false);
-    Character.set(x, y + 1, _msgSender(), 0, false);
-    Character.set(x, y + 2, _msgSender(), 0, false);
-    Character.set(x, y + 3, _msgSender(), 0, false);
+    Character.set(x, y, _msgSender(), 1, 0, 0, false);
+    Character.set(x, y + 1, _msgSender(), 2, 0, 0, false);
+    Character.set(x, y + 2, _msgSender(), 3, 0, 0, false);
+    Character.set(x, y + 3, _msgSender(), 4, 0, 0, false);
 
     PlayerPrivateState.set(_msgSender(), commitment);
   }
@@ -52,14 +52,21 @@ contract MyGameSystem is System {
     require(characterAtDestination.owner == address(0), "Destination is occupied");
 
     Character.deleteRecord(characterAtX, characterAtY);
-    Character.set(x, y, _msgSender(), 0, false);
+    Character.set(x, y, _msgSender(), character.id, 0, character.revealedValue, false);
   }
 
-  function attack(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[4] calldata _pubSignals,
+  function attack(uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[3] calldata _pubSignals,
     int32 fromX, int32 fromY, int32 toX, int32 toY
   ) public {
-    // TODO: verifyProof
+    ICircomRevealVerifier(VerifierContracts.getRevealContractAddress()).verifyProof(_pA, _pB, _pC, _pubSignals);
+    uint256 commitment = _pubSignals[0];
+    uint256 characterReveal = _pubSignals[1];
+    uint256 valueReveal = _pubSignals[2];
+    
+    require(PlayerPrivateState.getCommitment(_msgSender()) == commitment, "Invalid commitment");
+    // TODO: check character id reveal require(commitment)
     require(Character.getOwner(fromX, fromY) == _msgSender(), "You're not the planet owner");
+    Character.setRevealedValue(fromX, fromY, uint32(valueReveal));
     Character.setAttackedAt(toX, toY, uint32(block.timestamp));
   }
 

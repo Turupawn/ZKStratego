@@ -156,8 +156,6 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
       const encodedDestinationPosition = encodePosition(endTile.x, endTile.y);
       const destinationCharacter = getComponentValue(Character, encodedDestinationPosition);
       const direction = calculateDirection(startTile, endTile);
-      console.log(endTile)
-      console.log(destinationCharacter)
       if (destinationCharacter) {
         attack(startTile.x, startTile.y, endTile.x, endTile.y);
         console.log(`Attacked character from (${startTile.x}, ${startTile.y}) to (${endTile.x}, ${endTile.y})`);
@@ -172,11 +170,28 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
   });
 
   defineEnterSystem(world, [Has(Character)], ({ entity }) => {
+    const character = getComponentValue(Character, entity);
+    console.log(character)
     const characterObj = objectPool.get(entity, "Sprite");
     characterObj.setComponent({
       id: 'animation',
       once: (sprite) => {
-        sprite.play(Animations.Unknown);
+        switch (character.revealedValue)  {
+          case 1:
+            sprite.play(Animations.A);
+            break;
+          case 2:
+            sprite.play(Animations.B);
+            break;
+          case 3:
+            sprite.play(Animations.C);
+            break;
+          case 4:
+            sprite.play(Animations.D);
+            break;
+          default:
+            sprite.play(Animations.Unknown);
+        }
       }
     });
   });
@@ -190,10 +205,7 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
     if(!character)
       return;
     const pixelPosition = tileCoordToPixelCoord(decodePosition(entity), TILE_WIDTH, TILE_HEIGHT);
-    console.log({x: pixelPosition.x/32, y: pixelPosition.y/32});
-
     const characterObj = objectPool.get(entity, "Sprite");
-
     if (character.isDead) {
       characterObj.setComponent({
         id: 'animation',
@@ -206,6 +218,29 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
         id: 'animation',
         once: (sprite) => {
           sprite.play(Animations.Attacked);
+        }
+      });
+    } else if(character.revealedValue != 0)
+    {
+      characterObj.setComponent({
+        id: 'animation',
+        once: (sprite) => {
+          sprite.play(Animations.Attacked);
+
+          switch (character.revealedValue) {
+            case 1:
+              sprite.play(Animations.A);
+              break;
+            case 2:
+              sprite.play(Animations.B);
+              break;
+            case 3:
+              sprite.play(Animations.C);
+              break;
+            case 4:
+              sprite.play(Animations.D);
+              break;
+          }
         }
       });
     }

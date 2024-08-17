@@ -5,7 +5,11 @@ import { Script } from "forge-std/Script.sol";
 import { console } from "forge-std/console.sol";
 import { StoreSwitch } from "@latticexyz/store/src/StoreSwitch.sol";
 
+import { RevealVerifier } from "../src/RevealVerifier.sol";
+
 import { IWorld } from "../src/codegen/world/IWorld.sol";
+
+import { VerifierContracts } from "../src/codegen/index.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
@@ -23,6 +27,9 @@ contract PostDeploy is Script {
     // Call increment on the world via the registered function selector
     //uint32 newValue = IWorld(worldAddress).app__increment();
     //console.log("Increment via IWorld:", newValue);
+
+    address revealVerifier = address(new RevealVerifier());
+    VerifierContracts.setRevealContractAddress(revealVerifier);
 
     vm.stopBroadcast();
   }

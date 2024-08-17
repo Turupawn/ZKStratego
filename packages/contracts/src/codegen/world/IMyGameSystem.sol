@@ -19,7 +19,7 @@ interface IMyGameSystem {
     uint[2] calldata _pA,
     uint[2][2] calldata _pB,
     uint[2] calldata _pC,
-    uint[4] calldata _pubSignals,
+    uint[3] calldata _pubSignals,
     int32 fromX,
     int32 fromY,
     int32 toX,

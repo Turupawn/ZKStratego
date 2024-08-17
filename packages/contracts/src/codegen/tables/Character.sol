@@ -18,7 +18,9 @@ import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 
 struct CharacterData {
   address owner;
+  uint32 id;
   uint32 attackedAt;
+  uint32 revealedValue;
   bool isDead;
 }
 
@@ -27,12 +29,12 @@ library Character {
   ResourceId constant _tableId = ResourceId.wrap(0x7462617070000000000000000000000043686172616374657200000000000000);
 
   FieldLayout constant _fieldLayout =
-    FieldLayout.wrap(0x0019030014040100000000000000000000000000000000000000000000000000);
+    FieldLayout.wrap(0x0021050014040404010000000000000000000000000000000000000000000000);
 
   // Hex-encoded key schema of (int32, int32)
   Schema constant _keySchema = Schema.wrap(0x0008020023230000000000000000000000000000000000000000000000000000);
-  // Hex-encoded value schema of (address, uint32, bool)
-  Schema constant _valueSchema = Schema.wrap(0x0019030061036000000000000000000000000000000000000000000000000000);
+  // Hex-encoded value schema of (address, uint32, uint32, uint32, bool)
+  Schema constant _valueSchema = Schema.wrap(0x0021050061030303600000000000000000000000000000000000000000000000);
 
   /**
    * @notice Get the table's key field names.
@@ -49,10 +51,12 @@ library Character {
    * @return fieldNames An array of strings with the names of value fields.
    */
   function getFieldNames() internal pure returns (string[] memory fieldNames) {
-    fieldNames = new string[](3);
+    fieldNames = new string[](5);
     fieldNames[0] = "owner";
-    fieldNames[1] = "attackedAt";
-    fieldNames[2] = "isDead";
+    fieldNames[1] = "id";
+    fieldNames[2] = "attackedAt";
+    fieldNames[3] = "revealedValue";
+    fieldNames[4] = "isDead";
   }
 
   /**
@@ -116,6 +120,52 @@ library Character {
   }
 
   /**
+   * @notice Get id.
+   */
+  function getId(int32 x, int32 y) internal view returns (uint32 id) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 1, _fieldLayout);
+    return (uint32(bytes4(_blob)));
+  }
+
+  /**
+   * @notice Get id.
+   */
+  function _getId(int32 x, int32 y) internal view returns (uint32 id) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 1, _fieldLayout);
+    return (uint32(bytes4(_blob)));
+  }
+
+  /**
+   * @notice Set id.
+   */
+  function setId(int32 x, int32 y, uint32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    StoreSwitch.setStaticField(_tableId, _keyTuple, 1, abi.encodePacked((id)), _fieldLayout);
+  }
+
+  /**
+   * @notice Set id.
+   */
+  function _setId(int32 x, int32 y, uint32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    StoreCore.setStaticField(_tableId, _keyTuple, 1, abi.encodePacked((id)), _fieldLayout);
+  }
+
+  /**
    * @notice Get attackedAt.
    */
   function getAttackedAt(int32 x, int32 y) internal view returns (uint32 attackedAt) {
@@ -123,7 +173,7 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 1, _fieldLayout);
+    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 2, _fieldLayout);
     return (uint32(bytes4(_blob)));
   }
 
@@ -135,7 +185,7 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 1, _fieldLayout);
+    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 2, _fieldLayout);
     return (uint32(bytes4(_blob)));
   }
 
@@ -147,7 +197,7 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    StoreSwitch.setStaticField(_tableId, _keyTuple, 1, abi.encodePacked((attackedAt)), _fieldLayout);
+    StoreSwitch.setStaticField(_tableId, _keyTuple, 2, abi.encodePacked((attackedAt)), _fieldLayout);
   }
 
   /**
@@ -158,7 +208,53 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    StoreCore.setStaticField(_tableId, _keyTuple, 1, abi.encodePacked((attackedAt)), _fieldLayout);
+    StoreCore.setStaticField(_tableId, _keyTuple, 2, abi.encodePacked((attackedAt)), _fieldLayout);
+  }
+
+  /**
+   * @notice Get revealedValue.
+   */
+  function getRevealedValue(int32 x, int32 y) internal view returns (uint32 revealedValue) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 3, _fieldLayout);
+    return (uint32(bytes4(_blob)));
+  }
+
+  /**
+   * @notice Get revealedValue.
+   */
+  function _getRevealedValue(int32 x, int32 y) internal view returns (uint32 revealedValue) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 3, _fieldLayout);
+    return (uint32(bytes4(_blob)));
+  }
+
+  /**
+   * @notice Set revealedValue.
+   */
+  function setRevealedValue(int32 x, int32 y, uint32 revealedValue) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    StoreSwitch.setStaticField(_tableId, _keyTuple, 3, abi.encodePacked((revealedValue)), _fieldLayout);
+  }
+
+  /**
+   * @notice Set revealedValue.
+   */
+  function _setRevealedValue(int32 x, int32 y, uint32 revealedValue) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32(uint256(int256(x)));
+    _keyTuple[1] = bytes32(uint256(int256(y)));
+
+    StoreCore.setStaticField(_tableId, _keyTuple, 3, abi.encodePacked((revealedValue)), _fieldLayout);
   }
 
   /**
@@ -169,7 +265,7 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 2, _fieldLayout);
+    bytes32 _blob = StoreSwitch.getStaticField(_tableId, _keyTuple, 4, _fieldLayout);
     return (_toBool(uint8(bytes1(_blob))));
   }
 
@@ -181,7 +277,7 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 2, _fieldLayout);
+    bytes32 _blob = StoreCore.getStaticField(_tableId, _keyTuple, 4, _fieldLayout);
     return (_toBool(uint8(bytes1(_blob))));
   }
 
@@ -193,7 +289,7 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    StoreSwitch.setStaticField(_tableId, _keyTuple, 2, abi.encodePacked((isDead)), _fieldLayout);
+    StoreSwitch.setStaticField(_tableId, _keyTuple, 4, abi.encodePacked((isDead)), _fieldLayout);
   }
 
   /**
@@ -204,7 +300,7 @@ library Character {
     _keyTuple[0] = bytes32(uint256(int256(x)));
     _keyTuple[1] = bytes32(uint256(int256(y)));
 
-    StoreCore.setStaticField(_tableId, _keyTuple, 2, abi.encodePacked((isDead)), _fieldLayout);
+    StoreCore.setStaticField(_tableId, _keyTuple, 4, abi.encodePacked((isDead)), _fieldLayout);
   }
 
   /**
@@ -242,8 +338,16 @@ library Character {
   /**
    * @notice Set the full data using individual values.
    */
-  function set(int32 x, int32 y, address owner, uint32 attackedAt, bool isDead) internal {
-    bytes memory _staticData = encodeStatic(owner, attackedAt, isDead);
+  function set(
+    int32 x,
+    int32 y,
+    address owner,
+    uint32 id,
+    uint32 attackedAt,
+    uint32 revealedValue,
+    bool isDead
+  ) internal {
+    bytes memory _staticData = encodeStatic(owner, id, attackedAt, revealedValue, isDead);
 
     EncodedLengths _encodedLengths;
     bytes memory _dynamicData;
@@ -258,8 +362,16 @@ library Character {
   /**
    * @notice Set the full data using individual values.
    */
-  function _set(int32 x, int32 y, address owner, uint32 attackedAt, bool isDead) internal {
-    bytes memory _staticData = encodeStatic(owner, attackedAt, isDead);
+  function _set(
+    int32 x,
+    int32 y,
+    address owner,
+    uint32 id,
+    uint32 attackedAt,
+    uint32 revealedValue,
+    bool isDead
+  ) internal {
+    bytes memory _staticData = encodeStatic(owner, id, attackedAt, revealedValue, isDead);
 
     EncodedLengths _encodedLengths;
     bytes memory _dynamicData;
@@ -275,7 +387,13 @@ library Character {
    * @notice Set the full data using the data struct.
    */
   function set(int32 x, int32 y, CharacterData memory _table) internal {
-    bytes memory _staticData = encodeStatic(_table.owner, _table.attackedAt, _table.isDead);
+    bytes memory _staticData = encodeStatic(
+      _table.owner,
+      _table.id,
+      _table.attackedAt,
+      _table.revealedValue,
+      _table.isDead
+    );
 
     EncodedLengths _encodedLengths;
     bytes memory _dynamicData;
@@ -291,7 +409,13 @@ library Character {
    * @notice Set the full data using the data struct.
    */
   function _set(int32 x, int32 y, CharacterData memory _table) internal {
-    bytes memory _staticData = encodeStatic(_table.owner, _table.attackedAt, _table.isDead);
+    bytes memory _staticData = encodeStatic(
+      _table.owner,
+      _table.id,
+      _table.attackedAt,
+      _table.revealedValue,
+      _table.isDead
+    );
 
     EncodedLengths _encodedLengths;
     bytes memory _dynamicData;
@@ -306,12 +430,18 @@ library Character {
   /**
    * @notice Decode the tightly packed blob of static data using this table's field layout.
    */
-  function decodeStatic(bytes memory _blob) internal pure returns (address owner, uint32 attackedAt, bool isDead) {
+  function decodeStatic(
+    bytes memory _blob
+  ) internal pure returns (address owner, uint32 id, uint32 attackedAt, uint32 revealedValue, bool isDead) {
     owner = (address(Bytes.getBytes20(_blob, 0)));
 
-    attackedAt = (uint32(Bytes.getBytes4(_blob, 20)));
+    id = (uint32(Bytes.getBytes4(_blob, 20)));
 
-    isDead = (_toBool(uint8(Bytes.getBytes1(_blob, 24))));
+    attackedAt = (uint32(Bytes.getBytes4(_blob, 24)));
+
+    revealedValue = (uint32(Bytes.getBytes4(_blob, 28)));
+
+    isDead = (_toBool(uint8(Bytes.getBytes1(_blob, 32))));
   }
 
   /**
@@ -325,7 +455,7 @@ library Character {
     EncodedLengths,
     bytes memory
   ) internal pure returns (CharacterData memory _table) {
-    (_table.owner, _table.attackedAt, _table.isDead) = decodeStatic(_staticData);
+    (_table.owner, _table.id, _table.attackedAt, _table.revealedValue, _table.isDead) = decodeStatic(_staticData);
   }
 
   /**
@@ -354,8 +484,14 @@ library Character {
    * @notice Tightly pack static (fixed length) data using this table's schema.
    * @return The static data, encoded into a sequence of bytes.
    */
-  function encodeStatic(address owner, uint32 attackedAt, bool isDead) internal pure returns (bytes memory) {
-    return abi.encodePacked(owner, attackedAt, isDead);
+  function encodeStatic(
+    address owner,
+    uint32 id,
+    uint32 attackedAt,
+    uint32 revealedValue,
+    bool isDead
+  ) internal pure returns (bytes memory) {
+    return abi.encodePacked(owner, id, attackedAt, revealedValue, isDead);
   }
 
   /**
@@ -366,10 +502,12 @@ library Character {
    */
   function encode(
     address owner,
+    uint32 id,
     uint32 attackedAt,
+    uint32 revealedValue,
     bool isDead
   ) internal pure returns (bytes memory, EncodedLengths, bytes memory) {
-    bytes memory _staticData = encodeStatic(owner, attackedAt, isDead);
+    bytes memory _staticData = encodeStatic(owner, id, attackedAt, revealedValue, isDead);
 
     EncodedLengths _encodedLengths;
     bytes memory _dynamicData;

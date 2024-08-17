@@ -16,8 +16,10 @@ export default defineWorld({
         x: "int32",
         y: "int32",
         owner: "address",
+        id: "uint32",
         attackedAt: "uint32",
-        isDead: "bool"
+        revealedValue: "uint32",
+        isDead: "bool",
       },
       key: ["x", "y"]
     },
@@ -27,6 +29,12 @@ export default defineWorld({
         commitment: "uint256",
       },
       key: ["account"]
+    },
+    VerifierContracts: {
+      schema: {
+        revealContractAddress: "address"
+      },
+      key: [],
     },
   },
 });

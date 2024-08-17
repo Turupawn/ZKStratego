@@ -31,10 +31,12 @@ export function createSystemCalls(
           character2: 3,
           character3: 2,
           character4: 1,
-          privateSalt: 123
+          privateSalt: 123,
+          characterReveal: 4,
+          valueReveal: 1,
       },
-      "./zk_artifacts/spawn.wasm",
-      "./zk_artifacts/spawn_final.zkey"
+      "./zk_artifacts/reveal.wasm",
+      "./zk_artifacts/reveal_final.zkey"
     );
     let commitment : number = publicSignals[0];
     const tx = await worldContract.write.app__spawn([x, y, commitment]);
@@ -49,10 +51,35 @@ export function createSystemCalls(
   }
 
   const attack = async (fromX: number, fromY: number, toX: number, toY: number) => {
-    let pa = [1,1];
-    let pb = [[1,1],[1,1]];
-    let pc = [1,1];
-    let publicSignals = [1,2,3,4];
+
+    const { proof, publicSignals } = await groth16.fullProve(
+      {
+          character1: 4,
+          character2: 3,
+          character3: 2,
+          character4: 1,
+          privateSalt: 123,
+          characterReveal: 4,
+          valueReveal: 1,
+      },
+      "./zk_artifacts/reveal.wasm",
+      "./zk_artifacts/reveal_final.zkey"
+    );
+
+    console.log(proof)
+    console.log(publicSignals)
+
+    let pa = proof.pi_a
+    let pb = proof.pi_b
+    let pc = proof.pi_c
+    pa.pop()
+    pb.pop()
+    pc.pop()
+
+    console.log(pa)
+    console.log(pb)
+    console.log(pc)
+
     const tx = await worldContract.write.app__attack([pa, pb, pc, publicSignals, fromX, fromY, toX, toY]);
     await waitForTransaction(tx);
     return getComponentValue(Character,  singletonEntity);
