@@ -5,7 +5,7 @@
     },
     "textures": [
         {
-            "image": "atlas.png?timestamp=1723930291460",
+            "image": "atlas.png?timestamp=1723939573478",
             "format": "RGBA8888",
             "size": {
                 "w": 2048,
@@ -119,7 +119,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/Dead/1.png",
+                    "filename": "sprites/D/storm_dragon.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -140,7 +140,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/PlayerA/1.png",
+                    "filename": "sprites/D/swamp_dragon.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -155,6 +155,48 @@
                     },
                     "frame": {
                         "x": 0,
+                        "y": 64,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/Dead/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 32,
+                        "y": 64,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/PlayerA/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 64,
                         "y": 64,
                         "w": 32,
                         "h": 32
@@ -175,8 +217,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 32,
-                        "y": 64,
+                        "x": 96,
+                        "y": 0,
                         "w": 32,
                         "h": 32
                     }
@@ -196,8 +238,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 64,
-                        "y": 64,
+                        "x": 96,
+                        "y": 32,
                         "w": 32,
                         "h": 32
                     }
@@ -218,7 +260,7 @@
                     },
                     "frame": {
                         "x": 96,
-                        "y": 0,
+                        "y": 64,
                         "w": 32,
                         "h": 32
                     }
@@ -238,8 +280,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 96,
-                        "y": 32,
+                        "x": 0,
+                        "y": 96,
                         "w": 32,
                         "h": 32
                     }
@@ -259,8 +301,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 96,
-                        "y": 64,
+                        "x": 32,
+                        "y": 96,
                         "w": 32,
                         "h": 32
                     }
@@ -280,7 +322,7 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 0,
+                        "x": 64,
                         "y": 96,
                         "w": 32,
                         "h": 32
@@ -301,7 +343,7 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 32,
+                        "x": 96,
                         "y": 96,
                         "w": 32,
                         "h": 32
@@ -322,48 +364,6 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 64,
-                        "y": 96,
-                        "w": 32,
-                        "h": 32
-                    }
-                },
-                {
-                    "filename": "sprites/golem/attack/1.png",
-                    "rotated": false,
-                    "trimmed": false,
-                    "sourceSize": {
-                        "w": 32,
-                        "h": 32
-                    },
-                    "spriteSourceSize": {
-                        "x": 0,
-                        "y": 0,
-                        "w": 32,
-                        "h": 32
-                    },
-                    "frame": {
-                        "x": 96,
-                        "y": 96,
-                        "w": 32,
-                        "h": 32
-                    }
-                },
-                {
-                    "filename": "sprites/golem/attack/2.png",
-                    "rotated": false,
-                    "trimmed": false,
-                    "sourceSize": {
-                        "w": 32,
-                        "h": 32
-                    },
-                    "spriteSourceSize": {
-                        "x": 0,
-                        "y": 0,
-                        "w": 32,
-                        "h": 32
-                    },
-                    "frame": {
                         "x": 128,
                         "y": 0,
                         "w": 32,
@@ -371,7 +371,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/attack/3.png",
+                    "filename": "sprites/golem/attack/1.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -392,7 +392,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/attack/4.png",
+                    "filename": "sprites/golem/attack/2.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -413,7 +413,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/attack/5.png",
+                    "filename": "sprites/golem/attack/3.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -434,7 +434,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/death/0.png",
+                    "filename": "sprites/golem/attack/4.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -455,7 +455,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/death/1.png",
+                    "filename": "sprites/golem/attack/5.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -476,7 +476,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/death/2.png",
+                    "filename": "sprites/golem/death/0.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -497,7 +497,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/idle/0.png",
+                    "filename": "sprites/golem/death/1.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -518,7 +518,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/idle/1.png",
+                    "filename": "sprites/golem/death/2.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -539,7 +539,7 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/idle/2.png",
+                    "filename": "sprites/golem/idle/0.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -560,6 +560,48 @@
                     }
                 },
                 {
+                    "filename": "sprites/golem/idle/1.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 160,
+                        "y": 32,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/golem/idle/2.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 160,
+                        "y": 64,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
                     "filename": "sprites/golem/idle/3.png",
                     "rotated": false,
                     "trimmed": false,
@@ -574,8 +616,8 @@
                         "h": 32
                     },
                     "frame": {
-                        "x": 64,
-                        "y": 96,
+                        "x": 128,
+                        "y": 0,
                         "w": 32,
                         "h": 32
                     }

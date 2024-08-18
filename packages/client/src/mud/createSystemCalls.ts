@@ -81,8 +81,6 @@ export function createSystemCalls(
     pb.pop()
     pc.pop()
 
-    console.log(publicSignals)
-
     const tx = await worldContract.write.app__defend([pa, pb, pc, publicSignals, x, y]);
     await waitForTransaction(tx);
     return getComponentValue(Character,  singletonEntity);

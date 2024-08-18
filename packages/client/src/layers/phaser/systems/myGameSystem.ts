@@ -70,7 +70,10 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
   let startPoint: { x: number; y: number } | null = null;
   let draggedEntity: string | null = null;
   
-  // Declare the line objects
+  let playerRectangle1 = objectPool.get("PlayerRectangle1", "Rectangle");
+  let playerRectangle2 = objectPool.get("PlayerRectangle2", "Rectangle");
+  let playerRectangle3 = objectPool.get("PlayerRectangle3", "Rectangle");
+  let playerRectangle4 = objectPool.get("PlayerRectangle4", "Rectangle");
   let arrowLine1 = objectPool.get("ArrowLine1", "Line");
   let arrowLine2 = objectPool.get("ArrowLine2", "Line");
   let arrowLine3 = objectPool.get("ArrowLine3", "Line");
@@ -209,43 +212,56 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
     characterObj.setComponent({
       id: 'animation',
       once: (sprite) => {
-        if("0x" + playerEntity.slice(26).toLowerCase() == "" + character.owner.toLowerCase()) {
-          console.log("Azul")
-          switch (character.revealedValue)  {
-            case 1:
-              sprite.play(Animations.PlayerA);
-              break;
-            case 2:
-              sprite.play(Animations.PlayerB);
-              break;
-            case 3:
-              sprite.play(Animations.PlayerC);
-              break;
-            case 4:
-              sprite.play(Animations.PlayerD);
-              break;
-            default:
-              sprite.play(Animations.PlayerUnknown);
-          }
-        }else {
-          console.log("Negro")
+        let characterAnimation = character.revealedValue;
+        const playerIsOwner = "0x" + playerEntity.slice(26).toLowerCase() == "" + character.owner.toLowerCase()
+        if(playerIsOwner) {
+          characterAnimation = secretCharacterValues[character.id];
+        }
+        if(playerIsOwner) {
+          const characterPosition = tileCoordToPixelCoord(decodePosition(entity), TILE_WIDTH, TILE_HEIGHT);
+          let rectangle = null
 
-          switch (character.revealedValue)  {
+          switch (character.id)  {
             case 1:
-              sprite.play(Animations.A);
+              rectangle = playerRectangle1;
               break;
             case 2:
-              sprite.play(Animations.B);
+              rectangle = playerRectangle2;
               break;
             case 3:
-              sprite.play(Animations.C);
+              rectangle = playerRectangle3;
               break;
             case 4:
-              sprite.play(Animations.D);
+              rectangle = playerRectangle4;
               break;
-            default:
-              sprite.play(Animations.Unknown);
           }
+
+          rectangle.setComponent({
+            id: "rectangle",
+            once: (rectangle) => {
+              rectangle.setPosition(characterPosition.x, characterPosition.y);
+              rectangle.setSize(32,32);
+              rectangle.setFillStyle(0x0000ff);
+              rectangle.setAlpha(0.25);
+            },
+          });
+          
+        }
+        switch (characterAnimation)  {
+          case 1:
+            sprite.play(Animations.A);
+            break;
+          case 2:
+            sprite.play(Animations.B);
+            break;
+          case 3:
+            sprite.play(Animations.C);
+            break;
+          case 4:
+            sprite.play(Animations.D);
+            break;
+          default:
+            sprite.play(Animations.Unknown);
         }
       }
     });
@@ -262,7 +278,6 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
     const pixelPosition = tileCoordToPixelCoord(decodePosition(entity), TILE_WIDTH, TILE_HEIGHT);
     const characterObj = objectPool.get(entity, "Sprite");
 
-    console.log(character)
     if (character.isDead) {
       characterObj.setComponent({
         id: 'animation',
@@ -282,43 +297,29 @@ export const createMyGameSystem = (layer: PhaserLayer) => {
       characterObj.setComponent({
         id: 'animation',
         once: (sprite) => {
-          if("0x" + playerEntity.slice(26).toLowerCase() == "" + character.owner.toLowerCase()) {
-            console.log("Azul")
-            switch (secretCharacterValues[character.id])  {
-              case 1:
-                sprite.play(Animations.PlayerA);
-                break;
-              case 2:
-                sprite.play(Animations.PlayerB);
-                break;
-              case 3:
-                sprite.play(Animations.PlayerC);
-                break;
-              case 4:
-                sprite.play(Animations.PlayerD);
-                break;
-              default:
-                sprite.play(Animations.PlayerUnknown);
-            }
-          }else {
-            console.log("Negro")
-  
-            switch (character.revealedValue)  {
-              case 1:
-                sprite.play(Animations.A);
-                break;
-              case 2:
-                sprite.play(Animations.B);
-                break;
-              case 3:
-                sprite.play(Animations.C);
-                break;
-              case 4:
-                sprite.play(Animations.D);
-                break;
-              default:
-                sprite.play(Animations.Unknown);
-            }
+          let characterAnimation = character.revealedValue;
+          const playerIsOwner = "0x" + playerEntity.slice(26).toLowerCase() == "" + character.owner.toLowerCase()
+          if(playerIsOwner) {
+            characterAnimation = secretCharacterValues[character.id];
+          }
+          if(playerIsOwner) {
+            //sprite.setBackgroundColor("#0000ff");
+          }
+          switch (characterAnimation)  {
+            case 1:
+              sprite.play(Animations.A);
+              break;
+            case 2:
+              sprite.play(Animations.B);
+              break;
+            case 3:
+              sprite.play(Animations.C);
+              break;
+            case 4:
+              sprite.play(Animations.D);
+              break;
+            default:
+              sprite.play(Animations.Unknown);
           }
         }
       });
